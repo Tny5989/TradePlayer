@@ -42,12 +42,24 @@ function DialogueFactory.CreateOfferDialogue(npc, player, items)
         end
 
         local stack_size = tonumber(item.stack)
+        local exclusions = {}
         while c > stack_size do
-            table.insert(slots, { count = stack_size, item = item })
+            local index = player:Bag():ItemIndex(tonumber(item.id), stack_size, exclusions)
+            if index == nil then
+                log('Unable to find items to trade')
+                return NilDialogue:NilDialogue()
+            end
+            table.insert(slots, { count = stack_size, item = item, index = index })
             c = c - stack_size
+            exclusions[slots[#slots].index] = true
         end
         if c > 0 then
-            table.insert(slots, { count = c, item = item })
+            local index = player:Bag():ItemIndex(tonumber(item.id), stack_size, exclusions)
+            if index == nil then
+                log('Unable to find items to trade')
+                return NilDialogue:NilDialogue()
+            end
+            table.insert(slots, { count = c, item = item, index = index })
         end
     end
 
@@ -56,7 +68,7 @@ function DialogueFactory.CreateOfferDialogue(npc, player, items)
         return NilDialogue:NilDialogue()
     end
 
-    return OfferDialogue:OfferDialogue(npc, player, items)
+    return OfferDialogue:OfferDialogue(npc, player, slots)
 end
 
 return DialogueFactory

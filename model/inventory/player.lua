@@ -30,9 +30,11 @@ function PlayerInventory:ItemCount(id)
 end
 
 --------------------------------------------------------------------------------
-function PlayerInventory:ItemIndex(id)
+function PlayerInventory:ItemIndex(id, mincount, excluded_slots)
+    mincount = mincount and mincount or 1
+    excluded_slots = excluded_slots and excluded_slots or {}
     for key, value in pairs(self._items) do
-        if type(value) == 'table' and value.id == id then
+        if type(value) == 'table' and value.id == id and not excluded_slots[key] and value.count >= mincount then
             return key
         end
     end

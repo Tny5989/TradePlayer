@@ -1,11 +1,11 @@
 local NilInteraction = require('model/interaction/nil')
 
 --------------------------------------------------------------------------------
-local function CreateItemPacket(data, item, count, slot)
+local function CreateItemPacket(item, count, slot, index)
     local pkt = packets.new('outgoing', 0x034)
     pkt['Count'] = count
     pkt['Item'] = item
-    pkt['Inventory Index'] = data.player:Bag():ItemIndex(item)
+    pkt['Inventory Index'] = index
     pkt['Slot'] = slot
     return pkt
 end
@@ -16,13 +16,14 @@ local AddTradeItem = NilInteraction:NilInteraction()
 AddTradeItem.__index = AddTradeItem
 
 --------------------------------------------------------------------------------
-function AddTradeItem:AddTradeItem(item, count, slot)
+function AddTradeItem:AddTradeItem(item, count, slot, index)
     local o = NilInteraction:NilInteraction()
     setmetatable(o, self)
     o._item = item
     o._count = count
     o._slot = slot
-    o._to_send = { [1] = function(data) return {CreateItemPacket(data, o._item, o._count, o._slot)} end }
+    o._index = index
+    o._to_send = { [1] = function() return {CreateItemPacket(o._item, o._count, o._slot, o._index)} end }
     o._idx = 1
     o._type = 'AddTradeItem'
 

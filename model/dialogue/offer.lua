@@ -30,7 +30,7 @@ function OfferDialogue:OfferDialogue(target, player, items)
     o:_AppendInteraction(NilInteraction:NilInteraction())
     o:_AppendInteraction(OfferTrade:OfferTrade(o._target:Id()))
     for slot, data in pairs(items) do
-        o:_AppendInteraction(AddTradeItem:AddTradeItem(data.item.id, data.count, slot))
+        o:_AppendInteraction(AddTradeItem:AddTradeItem(data.item.id, data.count, slot, data.index))
     end
     o:_AppendInteraction(FinishTrade:FinishTrade(o._target:Id()))
 
