@@ -1,7 +1,7 @@
 _addon.name = 'TradePlayer'
 _addon.author = 'Areint/Alzade'
-_addon.version = '1.0.0'
-_addon.commands = {'tradeplayer', 'tradep', 'tp'}
+_addon.version = '0.0.5b'
+_addon.commands = {'tradeplayer', 'tp'}
 
 --------------------------------------------------------------------------------
 require('logger')
