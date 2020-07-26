@@ -18,11 +18,13 @@ local command = NilCommand:NilCommand()
 --------------------------------------------------------------------------------
 local function OnSuccess()
     command = NilCommand:NilCommand()
+    log('Accepted')
 end
 
 --------------------------------------------------------------------------------
 local function OnFailure()
     command = NilCommand:NilCommand()
+    log('Rejected')
 end
 
 --------------------------------------------------------------------------------
