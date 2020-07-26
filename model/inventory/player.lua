@@ -6,10 +6,11 @@ local PlayerInventory = NilInventory:NilInventory()
 PlayerInventory.__index = PlayerInventory
 
 --------------------------------------------------------------------------------
-function PlayerInventory:PlayerInventory(items)
+function PlayerInventory:PlayerInventory(bag)
     local o = NilInventory:NilInventory()
     setmetatable(o, self)
-    o._items = items
+    o._bag = bag
+    o._items = {}
     return o
 end
 
@@ -44,6 +45,17 @@ end
 --------------------------------------------------------------------------------
 function PlayerInventory:Type()
     return 'PlayerInventory'
+end
+
+--------------------------------------------------------------------------------
+function PlayerInventory:Update()
+    local items = windower.ffxi.get_items()
+    if items then
+        self._items = items[self._bag.command]
+        self._items['0'] = { id = 65535, count = items.gil }
+    else
+        self._items = {}
+    end
 end
 
 return PlayerInventory

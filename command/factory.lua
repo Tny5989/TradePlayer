@@ -1,6 +1,5 @@
 local NilCommand = require('command/nil')
 local OfferCommand = require('command/offer')
-local Resources = require('resources')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -8,7 +7,7 @@ local CommandFactory = {}
 
 --------------------------------------------------------------------------------
 local function GetItemResource(name)
-    for key, value in pairs(Resources.items) do
+    for key, value in pairs(resources.items) do
         if value.en:lower() == name:lower() then
             return value
         end

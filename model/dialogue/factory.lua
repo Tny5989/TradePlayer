@@ -1,5 +1,6 @@
 local OfferDialogue = require('model/dialogue/offer')
 local NilDialogue = require('model/dialogue/nil')
+local NilInventory = require('model/inventory/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -33,6 +34,7 @@ function DialogueFactory.CreateOfferDialogue(npc, player, items)
     end
 
     local slots = {}
+    local size = 0
     for _, data in pairs(items) do
         local c = tonumber(data.count)
         local item = data.item
@@ -41,7 +43,7 @@ function DialogueFactory.CreateOfferDialogue(npc, player, items)
             return NilDialogue:NilDialogue()
         end
 
-        local stack_size = tonumber(item.stack)
+        local stack_size = tonumber(item.stack) and tonumber(item.stack) or math.huge
         local exclusions = {}
         while c > stack_size do
             local index = player:Bag():ItemIndex(tonumber(item.id), stack_size, exclusions)
@@ -49,21 +51,28 @@ function DialogueFactory.CreateOfferDialogue(npc, player, items)
                 log('Unable to find items to trade')
                 return NilDialogue:NilDialogue()
             end
-            table.insert(slots, { count = stack_size, item = item, index = index })
+            slots[size + 1] = { count = stack_size, item = item, index = index }
+            size = size + 1
             c = c - stack_size
             exclusions[slots[#slots].index] = true
         end
         if c > 0 then
-            local index = player:Bag():ItemIndex(tonumber(item.id), stack_size, exclusions)
-            if index == nil then
+            local index = player:Bag():ItemIndex(tonumber(item.id), c, exclusions)
+            if index == NilInventory.INVALID_INDEX then
                 log('Unable to find items to trade')
                 return NilDialogue:NilDialogue()
             end
-            table.insert(slots, { count = c, item = item, index = index })
+
+            if item.id == 65535 then
+                slots['0'] = { count = c, item = item, index = index }
+            else
+                slots[size + 1] = { count = c, item = item, index = index }
+                size = size + 1
+            end
         end
     end
 
-    if #slots > 8 then
+    if size > 8 then
         log('Attempting to trade too many items')
         return NilDialogue:NilDialogue()
     end

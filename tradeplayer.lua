@@ -1,12 +1,13 @@
 _addon.name = 'TradePlayer'
 _addon.author = 'Areint/Alzade'
-_addon.version = '0.0.5b'
+_addon.version = '0.0.6b'
 _addon.commands = {'tradeplayer', 'tp'}
 
 --------------------------------------------------------------------------------
 require('logger')
 packets = require('util/packets')
 settings = require('util/settings')
+resources = require('resources')
 
 local CommandFactory = require('command/factory')
 local NilCommand = require('command/nil')

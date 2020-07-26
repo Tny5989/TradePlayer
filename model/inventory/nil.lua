@@ -31,4 +31,8 @@ function NilInventory:Type()
     return 'NilInventory'
 end
 
+--------------------------------------------------------------------------------
+function NilInventory:Update()
+end
+
 return NilInventory

@@ -11,12 +11,17 @@ function InventoryFactory.CreateInventory(bag_num)
         return NilInventory:NilInventory()
     end
 
-    local items = windower.ffxi.get_items(bag_num)
-    if not items then
-        return NilInventory:NilInventory()
+    local inv = windower.ffxi.get_items()
+    local bag = resources.bags[bag_num]
+    local inventory
+    if inv and inv.gil >= 0 and inv[bag.command] then
+        inventory = PlayerInventory:PlayerInventory(bag)
+    else
+        inventory = NilInventory:NilInventory()
     end
 
-    return PlayerInventory:PlayerInventory(items)
+    inventory:Update()
+    return inventory
 end
 
 return InventoryFactory

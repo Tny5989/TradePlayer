@@ -41,6 +41,7 @@ end
 
 --------------------------------------------------------------------------------
 function AddTradeItem:__call(data)
+    data.player:Bag():Update()
     local pkts = self:_GeneratePackets(data)
     for _, pkt in pairs(pkts) do
         packets.inject(pkt)
