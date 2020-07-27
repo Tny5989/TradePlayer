@@ -1,6 +1,6 @@
 _addon.name = 'TradePlayer'
-_addon.author = 'Areint/Alzade'
-_addon.version = '0.0.6b'
+_addon.author = 'Tny5989'
+_addon.version = '0.1.0b'
 _addon.commands = {'tradeplayer', 'tp'}
 
 --------------------------------------------------------------------------------
