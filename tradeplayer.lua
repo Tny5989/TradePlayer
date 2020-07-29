@@ -1,6 +1,6 @@
 _addon.name = 'TradePlayer'
 _addon.author = 'Tny5989'
-_addon.version = '0.1.0b'
+_addon.version = '0.1.1b'
 _addon.commands = {'tradeplayer', 'tp'}
 
 --------------------------------------------------------------------------------
