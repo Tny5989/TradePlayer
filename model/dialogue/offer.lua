@@ -1,5 +1,4 @@
 local NilDialogue = require('model/dialogue/nil')
-local NilMenu = require('model/menu/nil')
 local AddTradeItem = require('model/interaction/addtradeitem')
 local FinishTrade = require('model/interaction/finishtrade')
 local OfferTrade = require('model/interaction/offertrade')
@@ -17,7 +16,6 @@ function OfferDialogue:OfferDialogue(target, player, items)
     o._target = target
     o._player = player
     o._type = 'OfferDialogue'
-    o._menu = NilMenu:NilMenu()
     o._interactions = {}
     o._idx = 1
 
@@ -63,12 +61,9 @@ end
 --------------------------------------------------------------------------------
 function OfferDialogue:_OnSuccess()
     self._idx = self._idx + 1
-    local option = self._menu:OptionFor()
-    local menu_id = self._menu:Id()
     local next = self._interactions[self._idx]
+    local data = { target = self._target, player = self._player }
 
-    local data = { target = self._target, menu = menu_id, choice = option.option,
-                   automated = option.automated, uk1 = option.uk1, player = self._player }
     next(data)
 end
 
