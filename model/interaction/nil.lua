@@ -40,7 +40,7 @@ end
 
 --------------------------------------------------------------------------------
 function NilInteraction:__call()
-    self._on_success()
+    self._on_failure()
 end
 
 return NilInteraction
