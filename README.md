@@ -1,5 +1,5 @@
 # TradePlayer
-A windower addon for trading items with other players via commands.
+A windower addon for trading items with other players via commands (uses packets).
 
 Action                | Addon Command
 --------------------- | -----------------------------
